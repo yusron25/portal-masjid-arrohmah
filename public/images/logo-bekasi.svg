@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240">
+  <!-- Shield background -->
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5f2a;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0d3d17;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#daa520;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield shape -->
+  <path d="M100 10 L180 50 L180 140 Q180 200 100 230 Q20 200 20 140 L20 50 Z" fill="url(#shieldGrad)" stroke="#daa520" stroke-width="3"/>
+  <!-- Inner shield border -->
+  <path d="M100 20 L170 55 L170 138 Q170 192 100 220 Q30 192 30 138 L30 55 Z" fill="none" stroke="#ffd700" stroke-width="1.5"/>
+  <!-- Star at top -->
+  <polygon points="100,30 106,48 125,48 110,59 116,77 100,66 84,77 90,59 75,48 94,48" fill="url(#goldGrad)"/>
+  <!-- Rice stalks left -->
+  <g transform="translate(55,90)" fill="#ffd700">
+    <ellipse cx="0" cy="0" rx="3" ry="8" transform="rotate(-30)"/>
+    <ellipse cx="-5" cy="10" rx="3" ry="8" transform="rotate(-20)"/>
+    <ellipse cx="-8" cy="22" rx="3" ry="8" transform="rotate(-10)"/>
+    <ellipse cx="-6" cy="34" rx="3" ry="8" transform="rotate(5)"/>
+    <ellipse cx="0" cy="45" rx="3" ry="7" transform="rotate(15)"/>
+    <path d="M5,-5 Q-15,25 -5,55" fill="none" stroke="#daa520" stroke-width="1.5"/>
+  </g>
+  <!-- Rice stalks right -->
+  <g transform="translate(145,90) scale(-1,1)" fill="#ffd700">
+    <ellipse cx="0" cy="0" rx="3" ry="8" transform="rotate(-30)"/>
+    <ellipse cx="-5" cy="10" rx="3" ry="8" transform="rotate(-20)"/>
+    <ellipse cx="-8" cy="22" rx="3" ry="8" transform="rotate(-10)"/>
+    <ellipse cx="-6" cy="34" rx="3" ry="8" transform="rotate(5)"/>
+    <ellipse cx="0" cy="45" rx="3" ry="7" transform="rotate(15)"/>
+    <path d="M5,-5 Q-15,25 -5,55" fill="none" stroke="#daa520" stroke-width="1.5"/>
+  </g>
+  <!-- Buffalo head silhouette -->
+  <g transform="translate(100,105)" fill="#ffd700">
+    <!-- Head -->
+    <ellipse cx="0" cy="8" rx="14" ry="11"/>
+    <!-- Horns -->
+    <path d="M-14,5 Q-28,-15 -22,-25" fill="none" stroke="#ffd700" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M14,5 Q28,-15 22,-25" fill="none" stroke="#ffd700" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Eyes -->
+    <circle cx="-5" cy="5" r="2" fill="#0d3d17"/>
+    <circle cx="5" cy="5" r="2" fill="#0d3d17"/>
+    <!-- Nose -->
+    <ellipse cx="0" cy="13" rx="5" ry="3" fill="#daa520"/>
+  </g>
+  <!-- Gear/cog element -->
+  <circle cx="100" cy="160" r="18" fill="none" stroke="#ffd700" stroke-width="2.5"/>
+  <circle cx="100" cy="160" r="12" fill="#ffd700"/>
+  <!-- Cotton -->
+  <g transform="translate(100,160)" fill="#ffffff">
+    <circle cx="0" cy="-4" r="4"/>
+    <circle cx="-4" cy="2" r="3.5"/>
+    <circle cx="4" cy="2" r="3.5"/>
+    <circle cx="0" cy="4" r="3"/>
+  </g>
+  <!-- Text -->
+  <text x="100" y="198" text-anchor="middle" fill="#ffd700" font-family="serif" font-weight="bold" font-size="10">KABUPATEN</text>
+  <text x="100" y="212" text-anchor="middle" fill="#ffd700" font-family="serif" font-weight="bold" font-size="13">BEKASI</text>
+</svg>
