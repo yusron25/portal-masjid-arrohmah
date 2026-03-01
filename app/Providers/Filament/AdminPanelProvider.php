@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('Desa Mukti Jaya')
+            ->brandName('Masjid Ar-Rohmah')
             ->colors([
                 'primary' => Color::Emerald,
             ])

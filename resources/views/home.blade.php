@@ -45,7 +45,7 @@
                 <div class="w-full md:w-[420px] shrink-0 fade-up" style="animation-delay:.2s" id="hero-slider">
                     <div class="relative rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.15)] aspect-[4/3]">
                         @foreach ($sliders as $index => $slide)
-                            <div class="slider-slide absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}"
+                            <div class="slider-slide absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none' }}"
                                 data-slide="{{ $index }}">
                                 @if ($slide->image_path)
                                     <img src="{{ Storage::url($slide->image_path) }}" alt="{{ $slide->title }}"
@@ -83,15 +83,47 @@
                 </div>
 
                 {{-- Slider Script --}}
-                <script>             document.addEventListener('DOMContentLoaded', functio n() {                 const slides = document.querySelectorAll('.slider-slide');                 const dots = document.querySelectorAll('.slider-dot');                 if (slides.length <= 1) return;
-                         let current = 0;                 let timer;
-                         function goTo(index) {                     slides[current].classList.remove('opacity-100');                     slides[current].classList.add('opacity-0');                     dots[current].classList.remove('bg-white', 'w-5');                     dots[current].classList.add('bg-white/50');
-                             current = index;
-                             slides[current].classList.remove('opacity-0');                     slides[current].classList.add('opacity-100');                     dots[current].classList.remove('bg-white/50');                     dots[current].classList.add('bg-white', 'w-5');                 }
-                         function next() {                     goTo((current + 1) % slides.length);                 }
-                         function startTimer() {                     timer = setInterval(next, 5000);                 }
-                         dots.forEach(functio n(dot) {                     dot.addEventListener('click', functio n() {                         clearInterval(timer);                         goTo(parseInt(this.dataset.target));                         startTimer();                     });                 });
-                         startTimer();             });
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var slides = document.querySelectorAll('.slider-slide');
+                        var dots = document.querySelectorAll('.slider-dot');
+                        if (slides.length <= 1) return;
+
+                        var current = 0;
+                        var timer;
+
+                        function goTo(index) {
+                            slides[current].classList.remove('opacity-100');
+                            slides[current].classList.add('opacity-0', 'pointer-events-none');
+                            dots[current].classList.remove('bg-white', 'w-5');
+                            dots[current].classList.add('bg-white/50');
+
+                            current = index;
+
+                            slides[current].classList.remove('opacity-0', 'pointer-events-none');
+                            slides[current].classList.add('opacity-100');
+                            dots[current].classList.remove('bg-white/50');
+                            dots[current].classList.add('bg-white', 'w-5');
+                        }
+
+                        function next() {
+                            goTo((current + 1) % slides.length);
+                        }
+
+                        function startTimer() {
+                            timer = setInterval(next, 5000);
+                        }
+
+                        for (var i = 0; i < dots.length; i++) {
+                            dots[i].addEventListener('click', function() {
+                                clearInterval(timer);
+                                goTo(parseInt(this.dataset.target));
+                                startTimer();
+                            });
+                        }
+
+                        startTimer();
+                    });
                 </script>
             @else
                 <div class="glass-card fade-up" style="animation-delay:.2s">
@@ -356,6 +388,126 @@
             <a href="{{ route('posts.index') }}" class="text-sm font-bold text-accent">Lihat Semua Berita →</a>
         </div>
     </section>
+
+    {{-- Jadwal Kajian Section --}}
+    <section class="mx-auto w-full max-w-6xl px-6 pb-16">
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.3em] text-accent">Dakwah</p>
+                <h2 class="mt-1 text-2xl font-bold text-ink section-title">Jadwal Kajian</h2>
+            </div>
+            <a href="{{ route('kajian.index') }}" class="hidden text-sm font-bold text-accent transition hover:underline md:block">Lihat Semua →</a>
+        </div>
+        <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            @forelse ($kajianSchedules as $schedule)
+                <div class="rounded-2xl bg-white p-5 shadow-[0_4px_24px_rgba(0,0,0,0.06)] card-hover">
+                    <div class="flex items-center gap-2 mb-3">
+                        @if ($schedule->day_of_week)
+                            <span class="rounded-full bg-accent/10 px-3 py-1 text-xs font-bold text-accent">{{ $schedule->day_of_week }}</span>
+                        @endif
+                        <span class="text-xs text-ink/40">{{ \Carbon\Carbon::parse($schedule->time_start)->format('H:i') }}{{ $schedule->time_end ? ' - ' . \Carbon\Carbon::parse($schedule->time_end)->format('H:i') : '' }}</span>
+                    </div>
+                    <h3 class="text-base font-bold text-ink">{{ $schedule->title }}</h3>
+                    <p class="mt-1 text-sm text-accent/80 font-medium">{{ $schedule->speaker }}</p>
+                    @if ($schedule->location)
+                        <p class="mt-2 text-xs text-ink/40">📍 {{ $schedule->location }}</p>
+                    @endif
+                </div>
+            @empty
+                <div class="col-span-full rounded-2xl border-2 border-dashed border-ink/10 p-8 text-center text-sm text-ink/40">
+                    Belum ada jadwal kajian. Tambahkan melalui panel admin.
+                </div>
+            @endforelse
+        </div>
+    </section>
+
+    {{-- Pengumuman & Agenda Section --}}
+    @if ($announcements->count())
+    <section class="mx-auto w-full max-w-6xl px-6 pb-16">
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.3em] text-accent">Informasi</p>
+                <h2 class="mt-1 text-2xl font-bold text-ink section-title">Pengumuman & Agenda</h2>
+            </div>
+            <a href="{{ route('pengumuman.index') }}" class="hidden text-sm font-bold text-accent transition hover:underline md:block">Lihat Semua →</a>
+        </div>
+        <div class="mt-8 space-y-3">
+            @foreach ($announcements as $item)
+                <div class="flex items-start gap-4 rounded-xl bg-white p-4 shadow-[0_2px_12px_rgba(0,0,0,0.04)] {{ $item->is_pinned ? 'ring-1 ring-accent/20' : '' }}">
+                    @if ($item->event_date)
+                        <div class="shrink-0 rounded-lg bg-teal-50 px-3 py-2 text-center">
+                            <p class="text-lg font-extrabold text-accent leading-none">{{ $item->event_date->format('d') }}</p>
+                            <p class="text-[10px] font-bold text-accent/60 uppercase">{{ $item->event_date->format('M') }}</p>
+                        </div>
+                    @else
+                        <div class="shrink-0 flex h-10 w-10 items-center justify-center rounded-lg bg-amber-50 text-lg">📢</div>
+                    @endif
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            @if ($item->is_pinned)<span class="text-[10px] font-bold text-accent">📌</span>@endif
+                            <span class="rounded-full px-2 py-0.5 text-[10px] font-bold {{ $item->type === 'pengumuman' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700' }}">{{ $item->type === 'pengumuman' ? 'Pengumuman' : 'Agenda' }}</span>
+                        </div>
+                        <h4 class="mt-1 text-sm font-bold text-ink">{{ $item->title }}</h4>
+                        <p class="mt-0.5 text-xs text-ink/40 line-clamp-1">{!! strip_tags($item->content) !!}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+    @endif
+
+    {{-- Keuangan Summary Section --}}
+    <section class="mx-auto w-full max-w-6xl px-6 pb-16">
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.3em] text-accent">Transparansi</p>
+                <h2 class="mt-1 text-2xl font-bold text-ink section-title">Informasi Keuangan</h2>
+            </div>
+            <a href="{{ route('keuangan.index') }}" class="hidden text-sm font-bold text-accent transition hover:underline md:block">Lihat Detail →</a>
+        </div>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2">
+            <div class="rounded-2xl bg-gradient-to-br from-teal-600 to-teal-800 p-6 text-white shadow-lg card-hover">
+                <p class="text-xs font-medium text-white/60 uppercase tracking-widest">Saldo Kas DKM</p>
+                <p class="mt-2 text-2xl font-extrabold">Rp {{ number_format($kasDkm, 0, ',', '.') }}</p>
+            </div>
+            <div class="rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 p-6 text-white shadow-lg card-hover">
+                <p class="text-xs font-medium text-white/60 uppercase tracking-widest">Saldo GIAS</p>
+                <p class="mt-2 text-2xl font-extrabold">Rp {{ number_format($gias, 0, ',', '.') }}</p>
+            </div>
+        </div>
+    </section>
+
+    {{-- Program Section --}}
+    @if ($programs->count())
+    <section class="mx-auto w-full max-w-6xl px-6 pb-16">
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.3em] text-accent">Kegiatan</p>
+                <h2 class="mt-1 text-2xl font-bold text-ink section-title">Program Masjid</h2>
+            </div>
+            <a href="{{ route('programs.index') }}" class="hidden text-sm font-bold text-accent transition hover:underline md:block">Lihat Semua →</a>
+        </div>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            @foreach ($programs as $program)
+                <a href="{{ route('programs.show', $program->slug) }}" class="group card-hover rounded-2xl bg-white overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
+                    @if ($program->thumbnail)
+                        <div class="aspect-video overflow-hidden">
+                            <img src="{{ Storage::url($program->thumbnail) }}" alt="{{ $program->title }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                    @else
+                        <div class="aspect-video bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
+                            <svg class="h-8 w-8 text-teal-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        </div>
+                    @endif
+                    <div class="p-4">
+                        <span class="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase {{ $program->category === 'sosial' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700' }}">{{ $program->category === 'sosial' ? 'Sosial' : 'Pendidikan' }}</span>
+                        <h3 class="mt-2 text-sm font-bold text-ink group-hover:text-accent transition line-clamp-2">{{ $program->title }}</h3>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    </section>
+    @endif
 
     {{-- Gallery Section --}}
     <section class="mx-auto w-full max-w-6xl px-6 pb-16">
