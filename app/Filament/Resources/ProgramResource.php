@@ -109,7 +109,14 @@ class ProgramResource extends Resource
                     ->dateTime('d M Y')
                     ->sortable(),
             ])
-            ->defaultSort('published_at', 'desc');
+            ->defaultSort('published_at', 'desc')
+            ->actions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                \Filament\Actions\DeleteBulkAction::make(),
+            ]);
     }
 
     public static function getPages(): array

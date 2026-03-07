@@ -107,7 +107,14 @@ class AnnouncementResource extends Resource
                     ->dateTime('d M Y')
                     ->sortable(),
             ])
-            ->defaultSort('is_pinned', 'desc');
+            ->defaultSort('is_pinned', 'desc')
+            ->actions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                \Filament\Actions\DeleteBulkAction::make(),
+            ]);
     }
 
     public static function getPages(): array

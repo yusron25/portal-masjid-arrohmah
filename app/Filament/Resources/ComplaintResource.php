@@ -61,11 +61,6 @@ class ComplaintResource extends Resource
                 Section::make('Detail Pengaduan')
                     ->icon('heroicon-o-document-text')
                     ->schema([
-                        Forms\Components\Select::make('category_id')
-                            ->label('Kategori')
-                            ->relationship('category', 'name')
-                            ->disabled()
-                            ->dehydrated(false),
 
                         Forms\Components\TextInput::make('location')
                             ->label('Lokasi')
@@ -135,11 +130,6 @@ class ComplaintResource extends Resource
                     ->sortable()
                     ->description(fn(Complaint $record): string => $record->citizen_phone ?? ''),
 
-                Tables\Columns\TextColumn::make('category.name')
-                    ->label('Kategori')
-                    ->badge()
-                    ->color('gray')
-                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('description')
                     ->label('Isi Pengaduan')
@@ -191,9 +181,13 @@ class ComplaintResource extends Resource
                         ComplaintStatus::Rejected->value => 'Ditolak',
                     ]),
 
-                Tables\Filters\SelectFilter::make('category_id')
-                    ->label('Kategori')
-                    ->relationship('category', 'name'),
+            ])
+            ->actions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                \Filament\Actions\DeleteBulkAction::make(),
             ]);
     }
 

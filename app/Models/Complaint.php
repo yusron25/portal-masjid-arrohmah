@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\ComplaintStatus;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Complaint extends Model
@@ -15,15 +14,10 @@ class Complaint extends Model
         'status' => ComplaintStatus::class,
     ];
 
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     protected static function booted(): void
     {
         static::creating(function (self $complaint) {
-            if (! empty($complaint->ticket_code)) {
+            if (!empty($complaint->ticket_code)) {
                 return;
             }
 

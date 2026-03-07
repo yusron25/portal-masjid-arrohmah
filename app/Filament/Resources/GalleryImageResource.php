@@ -65,6 +65,13 @@ class GalleryImageResource extends Resource
                     ->label('Dibuat')
                     ->dateTime('d M Y')
                     ->sortable(),
+            ])
+            ->actions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                \Filament\Actions\DeleteBulkAction::make(),
             ]);
     }
 

@@ -106,7 +106,14 @@ class FinanceResource extends Resource
                     ->limit(40)
                     ->searchable(),
             ])
-            ->defaultSort('transaction_date', 'desc');
+            ->defaultSort('transaction_date', 'desc')
+            ->actions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                \Filament\Actions\DeleteBulkAction::make(),
+            ]);
     }
 
     public static function getPages(): array
