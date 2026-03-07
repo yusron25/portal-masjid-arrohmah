@@ -6,7 +6,6 @@ use App\Models\Announcement;
 use App\Models\Finance;
 use App\Models\Gallery;
 use App\Models\KajianSchedule;
-use App\Models\Post;
 use App\Models\Program;
 use App\Models\Slider;
 use App\Models\SocialMedia;
@@ -19,12 +18,6 @@ class HomeController extends Controller
         $sliders = Slider::query()
             ->where('is_active', true)
             ->orderBy('sort_order')
-            ->get();
-
-        $posts = Post::query()
-            ->where('is_active', true)
-            ->orderByDesc('published_at')
-            ->take(6)
             ->get();
 
         $galleries = Gallery::query()
@@ -68,7 +61,6 @@ class HomeController extends Controller
 
         return view('home', [
             'sliders' => $sliders,
-            'posts' => $posts,
             'galleries' => $galleries,
             'kajianSchedules' => $kajianSchedules,
             'announcements' => $announcements,

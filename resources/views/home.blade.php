@@ -34,9 +34,9 @@
                     <a href="#jadwal-solat"
                         class="rounded-full bg-accent px-6 py-3 text-sm font-bold text-white shadow-lg shadow-teal-500/20 transition hover:shadow-teal-500/40 hover:-translate-y-0.5">🕌
                         Jadwal Solat</a>
-                    <a href="{{ route('posts.index') }}"
+                    <a href="{{ route('kajian.index') }}"
                         class="rounded-full border-2 border-white/30 px-6 py-3 text-sm font-bold text-white transition hover:border-white/60 hover:-translate-y-0.5">📖
-                        Kajian & Berita</a>
+                        Jadwal Kajian</a>
                 </div>
             </div>
 
@@ -126,9 +126,9 @@
                     });
                 </script>
             @else
-                <div class="glass-card fade-up" style="animation-delay:.2s">
+                {{-- <div class="glass-card fade-up" style="animation-delay:.2s">
                     <p class="text-sm text-ink/60">Tambahkan slider melalui admin untuk menampilkan sorotan.</p>
-                </div>
+                </div> --}}
             @endif
         </div>
     </section>
@@ -139,7 +139,7 @@
             @php
                 $stats = [
                     ['value' => '5', 'label' => 'Waktu Solat', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
-                    ['value' => $posts->count() . '+', 'label' => 'Kajian & Berita', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>'],
+                    ['value' => $kajianSchedules->count() . '+', 'label' => 'Jadwal Kajian', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>'],
                     ['value' => $galleries->count() . '+', 'label' => 'Album Galeri', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>'],
                     ['value' => '24/7', 'label' => 'Terbuka Untuk Ibadah', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/>'],
                 ];
@@ -337,57 +337,6 @@
             }
         });
     </script>
-
-    {{-- Latest News / Kajian --}}
-    <section class="mx-auto w-full max-w-6xl px-6 py-16">
-        <div class="flex items-end justify-between">
-            <div>
-                <p class="text-xs font-bold uppercase tracking-[0.3em] text-accent">Terbaru</p>
-                <h2 class="mt-1 text-2xl font-bold text-ink section-title">Kajian & Berita</h2>
-            </div>
-            <a href="{{ route('posts.index') }}"
-                class="hidden text-sm font-bold text-accent transition hover:underline md:block">Lihat Semua →</a>
-        </div>
-        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            @forelse ($posts as $post)
-                <a href="{{ route('posts.show', $post->slug) }}"
-                    class="group card-hover rounded-2xl bg-white overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
-                    @if ($post->thumbnail)
-                        <div class="aspect-video overflow-hidden">
-                            <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}"
-                                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        </div>
-                    @else
-                        <div class="aspect-video bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
-                            <svg class="h-10 w-10 text-teal-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                            </svg>
-                        </div>
-                    @endif
-                    <div class="p-5">
-                        @if ($post->category)
-                            <span
-                                class="inline-block rounded-full bg-teal-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-teal-600">{{ $post->category->name }}</span>
-                        @endif
-                        <h3 class="mt-2 text-base font-bold text-ink leading-snug group-hover:text-accent transition">
-                            {{ $post->title }}</h3>
-                        <p class="mt-2 text-sm text-ink/60 line-clamp-2">{{ Str::limit(strip_tags($post->content ?? ''), 100) }}
-                        </p>
-                        <p class="mt-3 text-xs font-medium text-ink/40">{{ optional($post->published_at)->format('d M Y') }}</p>
-                    </div>
-                </a>
-            @empty
-                <div
-                    class="col-span-full rounded-2xl border-2 border-dashed border-ink/10 p-12 text-center text-sm text-ink/40">
-                    Belum ada berita. Tambahkan data melalui panel admin.
-                </div>
-            @endforelse
-        </div>
-        <div class="mt-6 text-center md:hidden">
-            <a href="{{ route('posts.index') }}" class="text-sm font-bold text-accent">Lihat Semua Berita →</a>
-        </div>
-    </section>
 
     {{-- Jadwal Kajian Section --}}
     <section class="mx-auto w-full max-w-6xl px-6 pb-16">

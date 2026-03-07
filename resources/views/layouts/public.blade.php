@@ -31,7 +31,6 @@
             <div class="hidden items-center gap-4 text-sm font-semibold text-ink/70 md:flex">
                 <a href="{{ route('home') }}" class="transition hover:text-accent">Beranda</a>
                 <a href="{{ route('kajian.index') }}" class="transition hover:text-accent">Kajian</a>
-                <a href="{{ route('posts.index') }}" class="transition hover:text-accent">Berita</a>
                 <a href="{{ route('keuangan.index') }}" class="transition hover:text-accent">Keuangan</a>
                 <a href="{{ route('programs.index') }}" class="transition hover:text-accent">Program</a>
                 <a href="{{ route('pengumuman.index') }}" class="transition hover:text-accent">Pengumuman</a>
@@ -50,7 +49,6 @@
             <div class="flex flex-col gap-3 text-sm font-semibold text-ink/70">
                 <a href="{{ route('home') }}" class="rounded-lg px-3 py-2 hover:bg-ink/5">Beranda</a>
                 <a href="{{ route('kajian.index') }}" class="rounded-lg px-3 py-2 hover:bg-ink/5">Jadwal Kajian</a>
-                <a href="{{ route('posts.index') }}" class="rounded-lg px-3 py-2 hover:bg-ink/5">Berita</a>
                 <a href="{{ route('galleries.index') }}" class="rounded-lg px-3 py-2 hover:bg-ink/5">Galeri</a>
                 <a href="{{ route('keuangan.index') }}" class="rounded-lg px-3 py-2 hover:bg-ink/5">Keuangan</a>
                 <a href="{{ route('programs.index') }}" class="rounded-lg px-3 py-2 hover:bg-ink/5">Program</a>
@@ -85,7 +83,6 @@
                     <ul class="mt-3 space-y-2 text-sm text-white/60">
                         <li><a href="{{ route('home') }}" class="hover:text-white transition">Beranda</a></li>
                         <li><a href="{{ route('kajian.index') }}" class="hover:text-white transition">Jadwal Kajian</a></li>
-                        <li><a href="{{ route('posts.index') }}" class="hover:text-white transition">Berita</a></li>
                         <li><a href="{{ route('keuangan.index') }}" class="hover:text-white transition">Keuangan</a></li>
                         <li><a href="{{ route('programs.index') }}" class="hover:text-white transition">Program</a></li>
                         <li><a href="{{ route('pengumuman.index') }}" class="hover:text-white transition">Pengumuman</a></li>
