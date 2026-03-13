@@ -10,15 +10,15 @@
         </div>
 
         {{-- Saldo Cards --}}
-        <div class="grid gap-6 sm:grid-cols-2 mb-10">
+        <div class="grid gap-6 sm:grid-cols-1 mb-10">
             <div class="rounded-2xl bg-gradient-to-br from-teal-600 to-teal-800 p-8 text-white shadow-lg">
                 <p class="text-sm font-medium text-white/70 uppercase tracking-widest">Saldo Kas DKM</p>
                 <p class="mt-3 text-3xl font-extrabold">Rp {{ number_format($kasDkm, 0, ',', '.') }}</p>
             </div>
-            <div class="rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 p-8 text-white shadow-lg">
+            {{-- <div class="rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 p-8 text-white shadow-lg">
                 <p class="text-sm font-medium text-white/70 uppercase tracking-widest">Saldo GIAS</p>
                 <p class="mt-3 text-3xl font-extrabold">Rp {{ number_format($gias, 0, ',', '.') }}</p>
-            </div>
+            </div> --}}
         </div>
 
         {{-- Transaction Table --}}

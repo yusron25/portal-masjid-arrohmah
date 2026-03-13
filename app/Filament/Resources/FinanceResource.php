@@ -45,7 +45,6 @@ class FinanceResource extends Resource
                             ->label('Sumber Dana')
                             ->options([
                                 'kas_dkm' => 'Kas DKM',
-                                'gias' => 'GIAS',
                             ])
                             ->required(),
 
@@ -65,12 +64,12 @@ class FinanceResource extends Resource
                             ->required()
                             ->default(now()),
 
-                        Forms\Components\FileUpload::make('receipt_image')
-                            ->label('Bukti Transaksi')
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->disk('public')
-                            ->directory('finances')
-                            ->visibility('public'),
+                        // Forms\Components\FileUpload::make('receipt_image')
+                        //     ->label('Bukti Transaksi')
+                        //     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        //     ->disk('public')
+                        //     ->directory('finances')
+                        //     ->visibility('public'),
                     ])->columns(2),
             ]);
     }
