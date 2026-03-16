@@ -61,10 +61,22 @@ class ProgramResource extends Resource
                             ->directory('programs')
                             ->visibility('public'),
 
+                        Forms\Components\TextInput::make('video_url')
+                            ->label('URL Video')
+                            ->url()
+                            ->placeholder('https://www.youtube.com/watch?v=...')
+                            ->helperText('Tempel link YouTube, Facebook Video, dll.')
+                            ->columnSpanFull(),
+
                         Forms\Components\RichEditor::make('description')
                             ->label('Deskripsi')
-                            ->fileAttachmentsDisk('public')
-                            ->fileAttachmentsDirectory('rich-editor')
+                            ->toolbarButtons([
+                                'bold', 'italic', 'underline', 'strike',
+                                'h2', 'h3',
+                                'bulletList', 'orderedList',
+                                'blockquote', 'codeBlock',
+                                'link', 'redo', 'undo',
+                            ])
                             ->columnSpanFull(),
                     ])->columns(2),
 

@@ -25,6 +25,8 @@
             <p class="mt-2 text-sm text-ink/40">{{ $program->published_at->format('d F Y') }}</p>
         @endif
 
+        <x-video-embed :url="$program->video_url ?? null" />
+
         <div class="mt-8 prose prose-ink max-w-none">
             {!! $program->description !!}
         </div>
