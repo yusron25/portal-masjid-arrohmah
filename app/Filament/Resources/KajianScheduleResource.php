@@ -68,6 +68,8 @@ class KajianScheduleResource extends Resource
 
                         Forms\Components\RichEditor::make('description')
                             ->label('Deskripsi')
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('rich-editor')
                             ->columnSpanFull(),
                     ])->columns(2),
 

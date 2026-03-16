@@ -53,6 +53,8 @@ class AnnouncementResource extends Resource
                         Forms\Components\RichEditor::make('content')
                             ->label('Isi')
                             ->required()
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('rich-editor')
                             ->columnSpanFull(),
                     ])->columns(2),
 

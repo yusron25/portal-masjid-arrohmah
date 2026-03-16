@@ -3,12 +3,6 @@ Options +FollowSymLinks -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # ── Serve storage files langsung dari storage/app/public ──
-    # Ini menghilangkan kebutuhan symlink public/storage
-    RewriteCond %{REQUEST_URI} ^/storage/(.*)$
-    RewriteCond %{DOCUMENT_ROOT}/storage/app/public/%1 -f
-    RewriteRule ^storage/(.*)$ storage/app/public/$1 [L]
-
     # Jika file ada di folder public, langsung sajikan tanpa rewrite berat
     RewriteCond %{DOCUMENT_ROOT}/public/$1 -f
     RewriteRule ^(.*)$ public/$1 [L]
