@@ -30,3 +30,16 @@ Route::get('/pengumuman', [AnnouncementController::class, 'index'])->name('pengu
 // Saran & Masukan
 Route::view('/pengaduan', 'complaints.create')->name('complaints.create');
 Route::view('/pengaduan/lacak', 'complaints.track')->name('complaints.track');
+
+// ── Storage File Fallback (untuk hosting tanpa symlink/terminal) ──
+Route::get('/storage/{path}', function (string $path) {
+    // Cegah path traversal
+    $path = str_replace('..', '', $path);
+    $fullPath = storage_path('app/public/' . $path);
+
+    if (!file_exists($fullPath)) {
+        abort(404);
+    }
+
+    return response()->file($fullPath);
+})->where('path', '.*')->name('storage.serve');

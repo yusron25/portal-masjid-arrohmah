@@ -1,7 +1,7 @@
 <?php
 /**
  * ===================================================
- * DEPLOYMENT SETUP - Desa Mukti Jaya
+ * DEPLOYMENT SETUP - Ar-Rohmah
  * ===================================================
  *
  * Script ini menggantikan perintah terminal untuk setup Laravel di cPanel.
@@ -32,7 +32,7 @@
  */
 
 // ── Keamanan: ganti key ini dengan password Anda sendiri ──
-$DEPLOY_KEY = 'mukti2026';
+$DEPLOY_KEY = 'arrohmah2026';
 
 if (($_GET['key'] ?? '') !== $DEPLOY_KEY) {
     http_response_code(403);
@@ -95,19 +95,42 @@ if ($action === 'migrate') {
     $result = runCommand('artisan optimize:clear', $laravelPath);
 } elseif ($action === 'storage') {
     $storagePath = $laravelPath . '/storage/app/public';
-    $result = ['output' => createStorageLink(__DIR__, $storagePath), 'code' => 0];
+    $msgs = [];
+    $msgs[] = createStorageLink(__DIR__, $storagePath);
+    $msgs[] = '';
+    $msgs[] = '── Diagnostik Storage Path ──';
+    $msgs[] = 'Folder storage/app/public: ' . (is_dir($storagePath) ? '✅ Ada' : '❌ Tidak ada');
+    $msgs[] = 'Symlink public/storage: ' . (is_link(__DIR__ . '/storage') ? '✅ Symlink aktif' : (file_exists(__DIR__ . '/storage') ? '⚠️ Ada tapi bukan symlink' : '❌ Tidak ada'));
+    $msgs[] = '';
+    $msgs[] = '💡 Jika symlink gagal, tidak masalah!';
+    $msgs[] = '   File sudah bisa diakses via:';
+    $msgs[] = '   1. .htaccess rewrite rule (otomatis)';
+    $msgs[] = '   2. Laravel route fallback (/storage/{path})';
+    $result = ['output' => implode("\n", $msgs), 'code' => 0];
 } elseif ($action === 'check') {
     $checks = [];
+    $checks[] = '── Environment ──';
     $checks[] = 'PHP: ' . phpversion();
     $checks[] = 'Laravel Path: ' . $laravelPath;
+    $checks[] = 'Document Root: ' . ($_SERVER['DOCUMENT_ROOT'] ?? 'N/A');
+    $checks[] = '';
+    $checks[] = '── File Check ──';
     $checks[] = 'artisan: ' . (file_exists($laravelPath . '/artisan') ? '✅' : '❌');
     $checks[] = '.env: ' . (file_exists($laravelPath . '/.env') ? '✅' : '❌');
     $checks[] = 'vendor/: ' . (is_dir($laravelPath . '/vendor') ? '✅' : '❌');
+    $checks[] = '';
+    $checks[] = '── Permission ──';
     $checks[] = 'storage/ writable: ' . (is_writable($laravelPath . '/storage') ? '✅' : '❌');
     $checks[] = 'bootstrap/cache/ writable: ' . (is_writable($laravelPath . '/bootstrap/cache') ? '✅' : '❌');
-    $checks[] = 'Storage link: ' . (file_exists(__DIR__ . '/storage') ? '✅' : '❌ (klik "Buat Storage Link")');
+    $checks[] = '';
+    $checks[] = '── Storage Path ──';
+    $storagePub = $laravelPath . '/storage/app/public';
+    $checks[] = 'storage/app/public/: ' . (is_dir($storagePub) ? '✅ Ada' : '❌ Tidak ada — buat folder ini!');
+    $checks[] = 'Symlink public/storage: ' . (is_link(__DIR__ . '/storage') ? '✅ Symlink aktif' : (file_exists(__DIR__ . '/storage') ? '⚠️ Ada (bukan symlink)' : '❌ Tidak ada'));
+    $checks[] = 'Root .htaccess: ' . (file_exists($laravelPath . '/.htaccess') ? '✅ Ada' : '⚠️ Tidak ada — upload .htaccess root!');
 
     $r = runCommand('artisan --version', $laravelPath);
+    $checks[] = '';
     $checks[] = 'Laravel: ' . trim($r['output']);
 
     $result = ['output' => implode("\n", $checks), 'code' => 0];
@@ -119,7 +142,7 @@ if ($action === 'migrate') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deploy — Desa Mukti Jaya</title>
+    <title>Deploy — Ar-Rohmah</title>
     <style>
         * {
             margin: 0;
@@ -222,7 +245,7 @@ if ($action === 'migrate') {
 
 <body>
     <div class="container">
-        <h1>🚀 Deploy — Desa Mukti Jaya</h1>
+        <h1>🚀 Deploy — Ar-Rohmah</h1>
         <p class="subtitle">Laravel Path:
             <?= htmlspecialchars($laravelPath) ?>
         </p>
