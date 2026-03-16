@@ -9,11 +9,11 @@ Options +FollowSymLinks -Indexes
     RewriteCond %{DOCUMENT_ROOT}/storage/app/public/%1 -f
     RewriteRule ^storage/(.*)$ storage/app/public/$1 [L]
 
-    # Jika file ada di folder public, langsung sajikan
+    # Jika file ada di folder public, langsung sajikan tanpa rewrite berat
     RewriteCond %{DOCUMENT_ROOT}/public/$1 -f
     RewriteRule ^(.*)$ public/$1 [L]
 
-    # Rule umum — arahkan ke public/
+    # Rule umum Anda
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
@@ -28,11 +28,6 @@ Options +FollowSymLinks -Indexes
     Order allow,deny
     Deny from all
 </FilesMatch>
-
-# Proteksi folder sensitif
-<IfModule mod_rewrite.c>
-    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage(?!/app/public)|tests|vendor)(/|$) - [F,L]
-</IfModule>
 
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the "ea-php83" package as the default "PHP" programming language.
