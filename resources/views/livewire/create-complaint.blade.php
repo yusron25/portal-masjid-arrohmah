@@ -64,17 +64,6 @@
                 @error('citizen_email') <p class="mt-2 text-xs text-red-600">{{ $message }}</p> @enderror
             </div>
 
-            <div class="md:col-span-2">
-                <label class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">Kategori</label>
-                <select wire:model="category_id"
-                    class="mt-2 w-full rounded-2xl border border-ink/10 px-4 py-3 text-sm focus:border-ink focus:outline-none">
-                    <option value="">Pilih kategori</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-                @error('category_id') <p class="mt-2 text-xs text-red-600">{{ $message }}</p> @enderror
-            </div>
 
             <div class="md:col-span-2">
                 <label class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">Lokasi</label>

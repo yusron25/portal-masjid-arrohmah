@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\Category;
 use App\Models\Complaint;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,7 +14,7 @@ class CreateComplaint extends Component
     public string $citizen_nik = '';
     public string $citizen_phone = '';
     public string $citizen_email = '';
-    public ?int $category_id = null;
+
     public string $description = '';
     public string $location = '';
     public $evidence_image;
@@ -27,7 +26,7 @@ class CreateComplaint extends Component
             'citizen_nik' => ['required', 'string', 'max:32'],
             'citizen_phone' => ['required', 'string', 'max:32'],
             'citizen_email' => ['required', 'email', 'max:255'],
-            'category_id' => ['nullable', 'exists:categories,id'],
+
             'description' => ['required', 'string', 'max:2000'],
             'location' => ['nullable', 'string', 'max:255'],
             'evidence_image' => ['nullable', 'image', 'max:2048'],
@@ -48,13 +47,11 @@ class CreateComplaint extends Component
 
         session()->flash('ticket_code', $complaint->ticket_code);
 
-        $this->reset(['citizen_name', 'citizen_nik', 'citizen_phone', 'citizen_email', 'category_id', 'description', 'location', 'evidence_image']);
+        $this->reset(['citizen_name', 'citizen_nik', 'citizen_phone', 'citizen_email', 'description', 'location', 'evidence_image']);
     }
 
     public function render()
     {
-        return view('livewire.create-complaint', [
-            'categories' => Category::query()->orderBy('name')->get(),
-        ]);
+        return view('livewire.create-complaint');
     }
 }
