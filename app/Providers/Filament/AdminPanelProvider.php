@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->brandName('Masjid Ar-Rohmah')
             ->colors([
                 'primary' => Color::Emerald,

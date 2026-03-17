@@ -19,4 +19,25 @@ class AnnouncementController extends Controller
             'announcements' => $announcements,
         ]);
     }
+
+    public function show(int $announcement): View
+    {
+        $announcement = Announcement::query()
+            ->whereKey($announcement)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        $relatedAnnouncements = Announcement::query()
+            ->where('is_active', true)
+            ->whereKeyNot($announcement->id)
+            ->orderByDesc('is_pinned')
+            ->orderByDesc('published_at')
+            ->take(3)
+            ->get();
+
+        return view('pengumuman.show', [
+            'announcement' => $announcement,
+            'relatedAnnouncements' => $relatedAnnouncements,
+        ]);
+    }
 }

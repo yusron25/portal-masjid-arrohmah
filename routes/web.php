@@ -26,6 +26,9 @@ Route::get('/program/{slug}', [ProgramController::class, 'show'])->name('program
 
 // Pengumuman & Agenda
 Route::get('/pengumuman', [AnnouncementController::class, 'index'])->name('pengumuman.index');
+Route::get('/pengumuman/{announcement}', [AnnouncementController::class, 'show'])
+    ->whereNumber('announcement')
+    ->name('pengumuman.show');
 
 // Saran & Masukan
 Route::view('/pengaduan', 'complaints.create')->name('complaints.create');

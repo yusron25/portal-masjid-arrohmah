@@ -382,7 +382,7 @@
         </div>
         <div class="mt-8 space-y-3">
             @foreach ($announcements as $item)
-                <div class="flex items-start gap-4 rounded-xl bg-white p-4 shadow-[0_2px_12px_rgba(0,0,0,0.04)] {{ $item->is_pinned ? 'ring-1 ring-accent/20' : '' }}">
+                <a href="{{ route('pengumuman.show', $item->id) }}" class="flex items-start gap-4 rounded-xl bg-white p-4 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(0,0,0,0.08)] {{ $item->is_pinned ? 'ring-1 ring-accent/20' : '' }}">
                     @if ($item->event_date)
                         <div class="shrink-0 rounded-lg bg-teal-50 px-3 py-2 text-center">
                             <p class="text-lg font-extrabold text-accent leading-none">{{ $item->event_date->format('d') }}</p>
@@ -399,7 +399,7 @@
                         <h4 class="mt-1 text-sm font-bold text-ink">{{ $item->title }}</h4>
                         <p class="mt-0.5 text-xs text-ink/40 line-clamp-1">{!! strip_tags($item->content) !!}</p>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
     </section>

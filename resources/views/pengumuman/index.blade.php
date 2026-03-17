@@ -11,7 +11,7 @@
 
         <div class="space-y-4">
             @forelse ($announcements as $item)
-                <div class="rounded-2xl bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)] card-hover {{ $item->is_pinned ? 'ring-2 ring-accent/30' : '' }}">
+                <article class="rounded-2xl bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)] card-hover {{ $item->is_pinned ? 'ring-2 ring-accent/30' : '' }}">
                     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                         <div class="flex-1">
                             <div class="flex items-center gap-2 flex-wrap">
@@ -22,8 +22,19 @@
                                     {{ $item->type === 'pengumuman' ? '📢 Pengumuman' : '📅 Agenda' }}
                                 </span>
                             </div>
-                            <h3 class="mt-2 text-lg font-bold text-ink">{{ $item->title }}</h3>
-                            <div class="mt-2 text-sm text-ink/60 line-clamp-3">{!! strip_tags($item->content) !!}</div>
+                            <h3 class="mt-2 text-lg font-bold text-ink">
+                                <a href="{{ route('pengumuman.show', $item->id) }}" class="transition hover:text-accent">
+                                    {{ $item->title }}
+                                </a>
+                            </h3>
+                            {{-- <div class="prose prose-ink mt-4 max-w-none text-sm text-ink/70">
+                                {!! $item->content !!}
+                            </div> --}}
+                            <div class="mt-5">
+                                <a href="{{ route('pengumuman.show', $item->id) }}" class="text-sm font-bold text-accent transition hover:underline">
+                                    Baca selengkapnya →
+                                </a>
+                            </div>
                         </div>
                         <div class="text-right shrink-0">
                             @if ($item->event_date)
@@ -38,7 +49,7 @@
                             @endif
                         </div>
                     </div>
-                </div>
+                </article>
             @empty
                 <div class="rounded-2xl border-2 border-dashed border-ink/10 p-12 text-center text-sm text-ink/40">
                     Belum ada pengumuman. Tambahkan melalui panel admin.

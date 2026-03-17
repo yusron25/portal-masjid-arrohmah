@@ -50,18 +50,6 @@ class AnnouncementResource extends Resource
                             ->label('Tanggal Acara')
                             ->helperText('Wajib diisi untuk agenda kegiatan'),
 
-                        Forms\Components\RichEditor::make('content')
-                            ->label('Isi')
-                            ->required()
-                            ->toolbarButtons([
-                                'bold', 'italic', 'underline', 'strike',
-                                'h2', 'h3',
-                                'bulletList', 'orderedList',
-                                'blockquote', 'codeBlock',
-                                'link', 'redo', 'undo',
-                            ])
-                            ->columnSpanFull(),
-
                         Forms\Components\TextInput::make('video_url')
                             ->label('URL Video')
                             ->url()
@@ -69,6 +57,33 @@ class AnnouncementResource extends Resource
                             ->helperText('Tempel link YouTube, Facebook Video, dll.')
                             ->columnSpanFull(),
                     ])->columns(2),
+
+                Section::make('Isi Pengumuman')
+                    ->columnSpanFull()
+                    ->schema([
+                        Forms\Components\RichEditor::make('content')
+                            ->label('Isi')
+                            ->required()
+                            ->resizableImages()
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('announcements')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsAcceptedFileTypes([
+                                'image/jpeg',
+                                'image/png',
+                                'image/gif',
+                                'image/webp',
+                            ])
+                            ->helperText('Gunakan tombol sisipkan gambar untuk menambahkan gambar ke dalam isi pengumuman atau agenda.')
+                            ->toolbarButtons([
+                                'bold', 'italic', 'underline', 'strike',
+                                'h2', 'h3',
+                                'bulletList', 'orderedList',
+                                'blockquote', 'codeBlock',
+                                'link', 'attachFiles', 'redo', 'undo',
+                            ])
+                            ->columnSpanFull(),
+                    ]),
 
                 Section::make('Pengaturan')
                     ->schema([

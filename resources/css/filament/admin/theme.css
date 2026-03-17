@@ -1,0 +1,18 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*.php';
+@source '../../../../resources/views/filament/**/*.blade.php';
+@source '../../../../vendor/filament/**/*.blade.php';
+
+@layer components {
+    .fi-fo-rich-editor-toolbar {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        row-gap: 0.5rem;
+    }
+
+    .fi-fo-rich-editor-toolbar-group {
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+}
