@@ -1,4 +1,9 @@
 @extends('layouts.public')
+@section('title', $gallery->title . ' - Galeri Masjid Ar-Rohmah')
+@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($gallery->description ?: ('Dokumentasi galeri ' . $gallery->title . ' di Masjid Ar-Rohmah.')), 160))
+@section('meta_image', $gallery->cover_image ? url(Storage::url($gallery->cover_image)) : ($gallery->images->first()?->image_path ? url(Storage::url($gallery->images->first()->image_path)) : asset('images/logo-arrohmah.png')))
+@section('meta_url', route('galleries.show', $gallery->id))
+@section('meta_type', 'article')
 
 @section('content')
     <section class="mx-auto w-full max-w-6xl px-6 py-8">

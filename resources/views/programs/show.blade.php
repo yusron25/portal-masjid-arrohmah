@@ -1,4 +1,8 @@
 @extends('layouts.public')
+@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($program->description ?: ('Detail program ' . $program->title . ' di Masjid Ar-Rohmah.')), 160))
+@section('meta_image', $program->thumbnail ? url(Storage::url($program->thumbnail)) : asset('images/logo-arrohmah.png'))
+@section('meta_url', route('programs.show', $program->slug))
+@section('meta_type', 'article')
 @section('title', $program->title . ' — Masjid Ar-Rohmah')
 
 @section('content')

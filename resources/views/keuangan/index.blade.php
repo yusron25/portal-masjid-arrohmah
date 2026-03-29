@@ -1,4 +1,7 @@
 @extends('layouts.public')
+@section('meta_description', 'Transparansi laporan keuangan Masjid Ar-Rohmah, termasuk saldo kas dan riwayat transaksi.')
+@section('meta_image', asset('images/logo-arrohmah.png'))
+@section('meta_url', route('keuangan.index'))
 @section('title', 'Laporan Keuangan — Masjid Ar-Rohmah')
 
 @section('content')

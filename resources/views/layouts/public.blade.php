@@ -2,11 +2,35 @@
 <html lang="id">
 
 <head>
+    @php
+        $defaultTitle = config('app.name', 'Masjid Ar-Rohmah') . ' - Portal Masjid';
+        $metaTitle = trim($__env->yieldContent('title', $defaultTitle));
+        $metaDescription = trim($__env->yieldContent(
+            'meta_description',
+            'Website resmi Masjid Ar-Rohmah. Portal informasi masjid, jadwal solat, kajian, kegiatan, dan galeri.'
+        ));
+        $metaDescription = \Illuminate\Support\Str::limit(strip_tags($metaDescription), 160);
+        $metaImage = trim($__env->yieldContent('meta_image', asset('images/logo-arrohmah.png')));
+        $metaImage = \Illuminate\Support\Str::startsWith($metaImage, ['http://', 'https://']) ? $metaImage : url($metaImage);
+        $metaUrl = trim($__env->yieldContent('meta_url', url()->current()));
+        $metaType = trim($__env->yieldContent('meta_type', 'website'));
+    @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-        content="Website resmi Masjid Ar-Rohmah. Portal informasi masjid, jadwal solat, kajian, kegiatan, dan galeri.">
-    <title>{{ config('app.name', 'Masjid Ar-Rohmah') }} — Portal Masjid</title>
+    <title>{{ $metaTitle }}</title>
+    <meta name="description" content="{{ $metaDescription }}">
+    <link rel="canonical" href="{{ $metaUrl }}">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:type" content="{{ $metaType }}">
+    <meta property="og:site_name" content="{{ config('app.name', 'Masjid Ar-Rohmah') }}">
+    <meta property="og:title" content="{{ $metaTitle }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
+    <meta property="og:url" content="{{ $metaUrl }}">
+    <meta property="og:image" content="{{ $metaImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $metaTitle }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
+    <meta name="twitter:image" content="{{ $metaImage }}">
     <link rel="icon" href="{{ asset('images/logo-arrohmah.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

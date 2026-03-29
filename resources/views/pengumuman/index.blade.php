@@ -1,4 +1,7 @@
 @extends('layouts.public')
+@section('meta_description', 'Informasi terbaru, agenda kegiatan, dan pengumuman penting dari Masjid Ar-Rohmah.')
+@section('meta_image', asset('images/logo-arrohmah.png'))
+@section('meta_url', route('pengumuman.index'))
 @section('title', 'Pengumuman & Agenda — Masjid Ar-Rohmah')
 
 @section('content')

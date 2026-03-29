@@ -1,4 +1,8 @@
 @extends('layouts.public')
+@section('title', 'Ar-Rohmah - Portal Masjid')
+@section('meta_description', 'Website resmi Masjid Ar-Rohmah. Portal informasi masjid, jadwal solat, kajian, program, pengumuman, dan galeri kegiatan umat.')
+@section('meta_image', $sliders->first()?->image_path ? url(Storage::url($sliders->first()->image_path)) : asset('images/logo-arrohmah.png'))
+@section('meta_url', route('home'))
 
 @section('content')
     @php
@@ -45,8 +49,14 @@
                 <div class="w-full md:w-[420px] shrink-0 fade-up" style="animation-delay:.2s" id="hero-slider">
                     <div class="relative rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.15)] aspect-[4/3]">
                         @foreach ($sliders as $index => $slide)
+                            @php
+                                $sliderDialogId = 'hero-slide-detail-' . $slide->id;
+                            @endphp
                             <div class="slider-slide absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none' }}"
                                 data-slide="{{ $index }}">
+                                <button type="button" class="absolute inset-0 z-10 cursor-pointer"
+                                    data-dialog-target="{{ $sliderDialogId }}"
+                                    aria-label="Lihat detail {{ $slide->title }}"></button>
                                 @if ($slide->image_path)
                                     <img src="{{ Storage::url($slide->image_path) }}" alt="{{ $slide->title }}"
                                         class="h-full w-full object-cover">
@@ -54,24 +64,19 @@
                                     <div class="h-full w-full bg-gradient-to-br from-teal-400 to-teal-600"></div>
                                 @endif
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                                <div class="absolute bottom-0 left-0 right-0 p-5">
+                                <div class="pointer-events-none absolute bottom-0 left-0 right-0 z-20 p-5">
                                     <h3 class="text-lg font-bold text-white leading-snug">{{ $slide->title }}</h3>
                                     @if ($slide->description)
                                         <p class="mt-1.5 text-sm text-white/70 line-clamp-2">{{ $slide->description }}</p>
                                     @endif
-                                    @if ($slide->link_url)
-                                        <a href="{{ $slide->link_url }}"
-                                            class="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-teal-300 hover:text-teal-200 transition">
-                                            Selengkapnya <span>→</span>
-                                        </a>
-                                    @endif
+                                    <p class="mt-3 text-xs font-bold text-teal-300">Klik gambar untuk lihat detail</p>
                                 </div>
                             </div>
                         @endforeach
 
                         {{-- Dot Navigation --}}
                         @if ($sliders->count() > 1)
-                            <div class="absolute bottom-2 right-3 flex gap-1.5 z-10">
+                            <div class="absolute bottom-2 right-3 flex gap-1.5 z-30">
                                 @foreach ($sliders as $index => $slide)
                                     <button
                                         class="slider-dot h-2 w-2 rounded-full transition-all duration-300 {{ $index === 0 ? 'bg-white w-5' : 'bg-white/50' }}"
@@ -87,6 +92,37 @@
                     document.addEventListener('DOMContentLoaded', function() {
                         var slides = document.querySelectorAll('.slider-slide');
                         var dots = document.querySelectorAll('.slider-dot');
+
+                        document.querySelectorAll('[data-dialog-target]').forEach(function(button) {
+                            button.addEventListener('click', function() {
+                                var dialog = document.getElementById(button.dataset.dialogTarget);
+                                if (dialog) {
+                                    dialog.showModal();
+                                }
+                            });
+                        });
+
+                        document.querySelectorAll('.hero-slide-dialog').forEach(function(dialog) {
+                            dialog.addEventListener('click', function(event) {
+                                var rect = dialog.getBoundingClientRect();
+                                var isInside =
+                                    event.clientX >= rect.left &&
+                                    event.clientX <= rect.right &&
+                                    event.clientY >= rect.top &&
+                                    event.clientY <= rect.bottom;
+
+                                if (!isInside) {
+                                    dialog.close();
+                                }
+                            });
+
+                            dialog.querySelectorAll('[data-dialog-close]').forEach(function(closeButton) {
+                                closeButton.addEventListener('click', function() {
+                                    dialog.close();
+                                });
+                            });
+                        });
+
                         if (slides.length <= 1) return;
 
                         var current = 0;
@@ -125,6 +161,52 @@
                         startTimer();
                     });
                 </script>
+
+                @foreach ($sliders as $slide)
+                    @php
+                        $sliderDialogId = 'hero-slide-detail-' . $slide->id;
+                    @endphp
+                    <dialog id="{{ $sliderDialogId }}"
+                        class="hero-slide-dialog mx-auto w-[min(880px,calc(100%-2rem))] rounded-3xl border-0 p-0 shadow-[0_30px_80px_rgba(15,23,42,0.24)]">
+                        <div class="max-h-[88vh] overflow-y-auto bg-white">
+                            @if ($slide->image_path)
+                                <div class="aspect-[16/9] overflow-hidden bg-ink/5">
+                                    <img src="{{ Storage::url($slide->image_path) }}" alt="{{ $slide->title }}"
+                                        class="h-full w-full object-cover">
+                                </div>
+                            @endif
+
+                            <div class="p-6 sm:p-8">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="min-w-0">
+                                        <p class="text-xs font-bold uppercase tracking-[0.3em] text-accent">Sorotan</p>
+                                        <h3 class="mt-2 text-2xl font-bold leading-tight text-ink">{{ $slide->title }}</h3>
+                                    </div>
+                                    <button type="button"
+                                        class="flex h-10 w-10 items-center justify-center rounded-full bg-ink/5 text-xl text-ink/60 transition hover:bg-ink/10"
+                                        data-dialog-close>
+                                        &times;
+                                    </button>
+                                </div>
+
+                                @if ($slide->description)
+                                    <div class="mt-6 border-t border-ink/10 pt-6 text-sm leading-8 text-ink/75">
+                                        {!! nl2br(e($slide->description)) !!}
+                                    </div>
+                                @endif
+
+                                @if ($slide->link_url)
+                                    <div class="mt-6">
+                                        <a href="{{ $slide->link_url }}"
+                                            class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-white transition hover:bg-accent-2">
+                                            Kunjungi Tautan <span>&rarr;</span>
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </dialog>
+                @endforeach
             @else
                 {{-- <div class="glass-card fade-up" style="animation-delay:.2s">
                     <p class="text-sm text-ink/60">Tambahkan slider melalui admin untuk menampilkan sorotan.</p>

@@ -1,4 +1,8 @@
 @extends('layouts.public')
+@section('title', 'Galeri Masjid - Masjid Ar-Rohmah')
+@section('meta_description', 'Galeri dokumentasi kegiatan, kajian, dan momen penting Masjid Ar-Rohmah.')
+@section('meta_image', $galleries->first()?->cover_image ? url(Storage::url($galleries->first()->cover_image)) : asset('images/logo-arrohmah.png'))
+@section('meta_url', route('galleries.index'))
 
 @section('content')
     <section class="mx-auto w-full max-w-6xl px-6 py-8">

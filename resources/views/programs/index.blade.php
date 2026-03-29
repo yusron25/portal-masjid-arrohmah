@@ -1,4 +1,7 @@
 @extends('layouts.public')
+@section('meta_description', 'Program sosial dan pendidikan Masjid Ar-Rohmah untuk pemberdayaan umat dan kegiatan kemasjidan.')
+@section('meta_image', $programs->first()?->thumbnail ? url(Storage::url($programs->first()->thumbnail)) : asset('images/logo-arrohmah.png'))
+@section('meta_url', route('programs.index'))
 @section('title', 'Program — Masjid Ar-Rohmah')
 
 @section('content')
