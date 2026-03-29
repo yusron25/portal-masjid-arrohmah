@@ -44,14 +44,33 @@ class GalleryResource extends Resource
                             ->visibility('public')
                             ->openable(),
 
-                        Forms\Components\Textarea::make('description')
+                        Forms\Components\RichEditor::make('description')
                             ->label('Deskripsi')
-                            ->rows(3),
+                            ->resizableImages()
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('gallery-descriptions')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsAcceptedFileTypes([
+                                'image/jpeg',
+                                'image/png',
+                                'image/gif',
+                                'image/webp',
+                            ])
+                            ->helperText('Bisa sisipkan gambar dan atur posisi teks rata kiri, tengah, kanan, atau justify.')
+                            ->toolbarButtons([
+                                'bold', 'italic', 'underline', 'strike',
+                                'h2', 'h3',
+                                'alignStart', 'alignCenter', 'alignEnd', 'alignJustify',
+                                'bulletList', 'orderedList',
+                                'blockquote', 'codeBlock',
+                                'link', 'attachFiles', 'redo', 'undo',
+                            ])
+                            ->columnSpanFull(),
 
                         Forms\Components\DateTimePicker::make('published_at')
                             ->label('Tanggal Terbit')
                             ->default(now()),
-                    ]),
+                    ])->columns(2),
 
                 Section::make('Foto-Foto Galeri')
                     ->icon('heroicon-o-camera')

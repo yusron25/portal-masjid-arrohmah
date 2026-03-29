@@ -16,13 +16,27 @@
             <span class="text-ink/70">{{ Str::limit($gallery->title, 40) }}</span>
         </nav>
 
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-ink">{{ $gallery->title }}</h1>
+        <div class="mb-10">
+            <div class="rounded-3xl bg-white/80 p-8 shadow-[0_10px_40px_rgba(15,23,42,0.06)] backdrop-blur-sm">
+                <p class="text-xs font-bold uppercase tracking-[0.3em] text-accent">Dokumentasi Kegiatan</p>
+                <h1 class="mt-3 text-3xl font-bold text-ink md:text-5xl">{{ $gallery->title }}</h1>
+
+                <div class="mt-5 flex flex-wrap gap-3 text-sm text-ink/45">
+                    @if ($gallery->published_at)
+                        <span class="rounded-full bg-ink/5 px-4 py-2 font-medium">
+                            Dipublikasikan {{ $gallery->published_at->format('d F Y') }}
+                        </span>
+                    @endif
+                    <span class="rounded-full bg-accent/10 px-4 py-2 font-medium text-accent">
+                        {{ $gallery->images->count() }} foto
+                    </span>
+                </div>
+            </div>
+
             @if ($gallery->description)
-                <p class="mt-3 max-w-2xl text-sm text-ink/60">{{ $gallery->description }}</p>
-            @endif
-            @if ($gallery->published_at)
-                <p class="mt-2 text-xs text-ink/40">{{ $gallery->published_at->format('d F Y') }}</p>
+                <article class="prose prose-ink mt-8 max-w-none rounded-3xl bg-white/70 p-8 shadow-[0_10px_40px_rgba(15,23,42,0.05)]">
+                    {!! $gallery->description !!}
+                </article>
             @endif
         </div>
 

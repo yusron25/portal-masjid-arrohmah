@@ -33,7 +33,7 @@
                     <div class="p-5">
                         <h2 class="text-lg font-bold text-ink group-hover:text-accent transition">{{ $gallery->title }}</h2>
                         @if ($gallery->description)
-                            <p class="mt-2 text-sm text-ink/60 line-clamp-2">{{ $gallery->description }}</p>
+                            <div class="mt-2 text-sm text-ink/60 line-clamp-2">{!! strip_tags($gallery->description) !!}</div>
                         @endif
                         <div class="mt-3 flex items-center gap-2 text-xs text-ink/40">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
